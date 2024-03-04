@@ -2,8 +2,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QProgressBar
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic
 import sys
-from main import Main
 import time
+from main import Main
+
 
 TIME_LIMIT = 100
 
