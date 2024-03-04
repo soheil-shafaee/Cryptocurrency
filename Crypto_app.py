@@ -1,9 +1,11 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QProgressBar
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic
 import sys
-from loading import ProgressBar
 from main import Main
+import time
+
+TIME_LIMIT = 100
 
 
 class UI(QMainWindow):
@@ -16,22 +18,27 @@ class UI(QMainWindow):
         uic.loadUi("wellcome.ui", self)
 
         # Our Widgets
-        self.start_button = self.findChild(QPushButton, "start_button")
-        self.load = None
         self.main = None
+        self.start_button = self.findChild(QPushButton, "start_button")
+        self.progress = self.findChild(QProgressBar, "progressBar")
+
+        self.progress.setValue(0)
+        self.progress.setMaximum(100)
+
         self.start_button.clicked.connect(self.get_start)
 
         # Display Window
         self.show()
 
     def get_start(self):
-        pass
-        # self.load = ProgressBar()
-        # self.load.show()
-        # self.main = Main()
-        # self.close()
-        # self.load.close()
-        # self.main.show()
+        count = 0
+        while count < TIME_LIMIT:
+            count += 10
+            time.sleep(1)
+            self.progress.setValue(count)
+            if count == 90:
+                self.main = Main()
+        self.main.show()
 
 
 if __name__ == "__main__":
