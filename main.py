@@ -33,11 +33,11 @@ class Main(QMainWindow):
         self.usdt_price = self.findChild(QLabel, "usdt_price")
         self.usdt_percent = self.findChild(QLabel, "usdt_percent")
 
-        self.test = self.findChild(QLabel, "test")
-
         self.units_list.addItems(["", "USD", "EUR"])
         self.units_list.currentTextChanged.connect(self.update_units)
+
         self.get_price()
+
         # Display Window
         self.show()
 
@@ -68,7 +68,7 @@ class Main(QMainWindow):
         if "-" in self.coin_percent[0]:
             self.btc_percent.setStyleSheet("color: rgb(191, 1, 1)")
         self.btc_percent.setText(self.coin_percent[0] + "%")
-        
+
         if "-" in self.coin_percent[1]:
             self.eth_percent.setStyleSheet("color: rgb(191, 1, 1)")
         self.eth_percent.setText(self.coin_percent[1] + "%")
@@ -87,6 +87,7 @@ class Main(QMainWindow):
 
     def get_price(self):
         coin_list = ["BTC", "ETH", "SOL", "DOGE", "USDT"]
+
         for coin in coin_list:
             response = requests.get(f"https://min-api.cryptocompare.com/data/price?fsym={coin}&tsyms=USD,JPY,EUR")
             response_percent = requests.get(
@@ -96,6 +97,7 @@ class Main(QMainWindow):
             self.coin_price_list.append(response.json())
 
 
-app = QApplication(sys.argv)
-main = Main()
-app.exec_()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main = Main()
+    app.exec_()
